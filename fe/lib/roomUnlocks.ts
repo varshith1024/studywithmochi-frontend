@@ -45,7 +45,20 @@ export function createUnlockItems(world: THREE.Object3D, deskX = 3.6): UnlockIte
     const leaves = new THREE.Group(); leaves.position.set(0, 0.3, 0); g.add(leaves);
     for (let i = 0; i < 6; i++) { const a = (i / 6) * Math.PI * 2; const l = ball(leaves, 0.09, 0.3, 0.05, i % 2 ? "#3b9560" : "#52b57a", Math.cos(a) * 0.1, 0.25, Math.sin(a) * 0.1); l.rotation.z = -Math.cos(a) * 0.6; l.rotation.x = Math.sin(a) * 0.6; }
     ball(leaves, 0.08, 0.08, 0.08, "#ff9fcb", 0, 0.52, 0);
-    for (const s of [-1, 1]) { dot(g, 0.022, "#3b2a5e", s * 0.07, 0.18, 0.19); const b = ball(g, 0.04, 0.025, 0.01, "#ff8fb0", s * 0.12, 0.13, 0.18); b.material = new THREE.MeshBasicMaterial({ color: "#ff8fb0" }); }
+  for (const s of [-1, 1]) {
+  dot(g, 0.022, "#3b2a5e", s * 0.07, 0.18, 0.19);
+
+  ball(
+    g,
+    0.04,
+    0.025,
+    0.01,
+    "#ff8fb0",
+    s * 0.12,
+    0.13,
+    0.18
+  );
+}
     anims.set("TINY_PLANT", (t) => { leaves.rotation.z = Math.sin(t * 1.4) * 0.05 * rm; });
   }
 
