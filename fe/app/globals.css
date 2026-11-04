@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --color-night: #0b0518;
+  --color-dusk: #1a0d33;
+  --color-mochi: #c084fc;
+  --color-mochi-deep: #9333ea;
+  --color-blush: #f9a8d4;
+  --color-ink: #ede9fe;
+  --color-ink-dim: #b4a8d6;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body { background: var(--color-night); color: var(--color-ink); font-family: var(--font-sans); }
+
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.hero-in { animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.hero-in-2 { animation-delay: 0.15s; }
+.hero-in-3 { animation-delay: 0.3s; }
+
+:focus-visible { outline: 2px solid var(--color-mochi); outline-offset: 3px; border-radius: 9999px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in { animation: none; }
+}
+
+@keyframes flutter { 0%,100% { transform: translate(0,0) rotate(-4deg); } 50% { transform: translate(8px,-14px) rotate(5deg); } }
+.flutter { animation: flutter 4.5s ease-in-out infinite; transform-box: fill-box; transform-origin: center;  }
+@media (prefers-reduced-motion: reduce) { .flutter { animation: none; } }
+
+.soft-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(167, 139, 250, 0.55) transparent;
+}
+/* ---------- Login / register: always fits the screen, scales smoothly ---------- */
+.auth-shell {
+  display: grid; height: 100dvh; overflow: hidden;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: clamp(170px, 34dvh, 420px) minmax(0, 1fr);       /* portrait: Mochi on top, form below */
+}
+.auth-scene { position: relative; min-height: 0; }
+.auth-formwrap {
+  position: relative; z-index: 10; display: flex; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  padding: 0.5rem 1rem max(0.75rem, env(safe-area-inset-bottom)); scrollbar-width: none;
+}
+.auth-formwrap::-webkit-scrollbar { display: none; }
+@media (orientation: landscape) and (min-width: 640px) {                /* landscape: Mochi left, form right */
+  .auth-shell { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); }
+  .auth-formwrap { padding: 0.75rem 1.25rem; }
+}
+
+/* everything below scales with the screen height, so nothing jumps */
+.auth-form { margin: auto; width: 100%; max-width: 28rem; padding: clamp(0.8rem, 3.6dvh, 2.5rem) clamp(1rem, 4dvh, 2.5rem); border-radius: clamp(1.1rem, 3dvh, 2rem); }
+.auth-eyebrow { font-size: clamp(0.62rem, 1.3dvh, 0.75rem); }
+.auth-title { margin-top: clamp(0.2rem, 0.9dvh, 0.7rem); font-size: clamp(1.1rem, 3.1dvh, 2.15rem); line-height: 1.15; }
+.auth-sub { margin-top: clamp(0.3rem, 1dvh, 0.7rem); font-size: clamp(0.85rem, 1.6dvh, 1rem); }
+.auth-fields { margin-top: clamp(0.55rem, 2.4dvh, 1.8rem); display: grid; row-gap: clamp(0.4rem, 1.9dvh, 1.2rem); }
+.auth-label { display: block; margin-bottom: clamp(0.15rem, 0.7dvh, 0.5rem); font-size: clamp(0.72rem, 1.5dvh, 0.875rem); font-weight: 600; letter-spacing: 0.01em; color: #d9cdfb; }
+.auth-input { padding-block: clamp(0.4rem, 1.8dvh, 0.95rem); padding-left: 2.7rem; padding-right: 1rem; font-size: 16px; border-radius: clamp(0.7rem, 1.6dvh, 1rem); }
+.auth-error { margin-top: clamp(0.4rem, 1.5dvh, 1rem); padding: clamp(0.4rem, 1dvh, 0.7rem) 0.9rem; font-size: clamp(0.72rem, 1.4dvh, 0.875rem); }
+.auth-btn { margin-top: clamp(0.6rem, 2.3dvh, 1.6rem); padding-block: clamp(0.55rem, 1.9dvh, 1rem); font-size: clamp(0.9rem, 1.7dvh, 1rem); border-radius: clamp(0.75rem, 1.8dvh, 1rem); }
+.auth-alt { margin-top: clamp(0.5rem, 2dvh, 1.4rem); font-size: clamp(0.75rem, 1.5dvh, 0.875rem); }
+@media (max-height: 640px) { .auth-sub { display: none; } }
+@media (max-height: 540px) { .auth-eyebrow { display: none; } }
+
+/* "Turn your phone sideways" screen: phones held upright only (tablets and desktops never see it) */
+.rotate-guard { display: none; }
+@media (max-width: 600px) and (orientation: portrait) and (pointer: coarse) { .rotate-guard { display: flex; } }
+@keyframes rotate-hint { 0%, 15% { transform: rotate(0deg); } 55%, 100% { transform: rotate(-90deg); } }
+.rotate-phone { animation: rotate-hint 2.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .rotate-phone { animation: none; transform: rotate(-90deg); } }
