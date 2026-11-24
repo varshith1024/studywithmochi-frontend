@@ -3,7 +3,7 @@ const nextConfig = {
   async rewrites() {
     const backend =
       process.env.NODE_ENV === "production"
-        ? "https://studywithmochi-backend-fixed.onrender.com"
+        ? "https://studywithmochi-backend.onrender.com"
         : "http://localhost:8080";
 
     return [
